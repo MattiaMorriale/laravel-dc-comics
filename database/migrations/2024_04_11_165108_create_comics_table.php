@@ -16,14 +16,14 @@ return new class extends Migration
 
             $table->string('title', 200);
             $table->text('description')->nullable();
-            $table->string('thumb')->nullable();
-            $table->smallInteger('price');
+            $table->text('thumb')->nullable();
+            $table->string('price', 20);
             $table->string('series', 50);
             $table->date('sale_date');
             $table->string('type', 50);
-            $table->string('artists', 80);
-            $table->string('writers', 80);
-
+            $table->text('artists');
+            $table->text('writers');
+            
             $table->timestamps();
         });
     }
