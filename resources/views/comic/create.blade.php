@@ -9,7 +9,12 @@
     
             <div class="mb-3">
                 <label for="title" class="form-label text-primary">Titolo</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" class="form-control" id="title" name="title @error('title') is-invalid @enderror " value="{{old('title')}}" required>
+                @error('title')
+                    <div class="invalid-feedback ">
+                        {{$message}}
+                    </div>
+                @enderror
             </div>
     
             <div class="mb-3">

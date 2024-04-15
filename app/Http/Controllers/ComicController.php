@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comic;
+use Illuminate\Support\Facades\Validator;
 
 class ComicController extends Controller
 {
@@ -31,6 +32,9 @@ class ComicController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validation($request->all());
+
         $newComic = new Comic();
 
 
@@ -92,5 +96,35 @@ class ComicController extends Controller
         $comic->delete();
 
         return redirect()->route('comics.index');
+    }
+
+    private function validation($data)
+    {
+        $validator = Validator::make($data, [
+            'title' => 'required | max:200',
+            'description' => 'nullable | max:4000',
+            'thumb' => 'nullable',
+            'price' => 'required | max:20',
+            'series' => 'required | max:50',
+            'sale_date' => 'required',
+            'type' => 'required | max:50',
+            'artists' => 'required',
+            'writers' => 'required',
+        ], [
+            
+            'title.required' => 'Il titolo deve essere inserito nel campo',
+            'title.max' => 'Il titolo supera il numero di caratteri consentiti (:max)',
+            'description.max' => 'La descrizione supera il numero di caratteri consentiti (:max)',
+            'price.required' => 'Il prezzo deve essere inserito nel campo',
+            'price.max' => 'Il prezzo supera il numero di caratteri consentiti (:max)',
+            'series.required' => 'La Serie deve essere inserito nel campo',
+            'series.max' => 'La Serie supera il numero di caratteri consentiti (:max)',
+            'sale_date.required' => 'La data deve essere inserito nel campo',
+            'type.required' => 'La tipologia deve essere inserito nel campo',
+            'type.max' => 'La tipologia supera il numero di caratteri consentiti (:max)',
+            'artists.required' => "l'artista deve essere inserito nel campo",
+            'writers.required' => "lo scrittore deve essere inserito nel campo",
+
+        ])->validate();
     }
 }
