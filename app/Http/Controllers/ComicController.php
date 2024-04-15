@@ -74,6 +74,8 @@ class ComicController extends Controller
      */
     public function update(Request $request, Comic $comic)
     {
+        $this->validation($request->all());
+
         $comic->title = $request['title'];
         $comic->description = $request['description'];
         $comic->thumb = $request['thumb'];
@@ -111,7 +113,7 @@ class ComicController extends Controller
             'artists' => 'required',
             'writers' => 'required',
         ], [
-            
+
             'title.required' => 'Il titolo deve essere inserito nel campo',
             'title.max' => 'Il titolo supera il numero di caratteri consentiti (:max)',
             'description.max' => 'La descrizione supera il numero di caratteri consentiti (:max)',
